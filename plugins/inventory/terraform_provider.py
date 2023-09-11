@@ -194,7 +194,7 @@ class InventoryModule(BaseInventoryPlugin):  # type: ignore  # mypy ignore
         terraform = TerraformCommands(module_run_command, project_path, terraform_binary, False)
 
         try:
-            state_content = terraform.show(state_file)
+            state_content = terraform.show(state_file or None)
         except TerraformWarning as e:
             raise TerraformError(e.message)
 

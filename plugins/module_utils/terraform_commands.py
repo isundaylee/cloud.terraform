@@ -173,8 +173,10 @@ class TerraformCommands:
         result = TerraformProviderSchemaCollection.from_json(json.loads(text))
         return result
 
-    def show(self, state_or_plan_file_path: str) -> Optional[TerraformShow]:
-        command = ["show", "-json", state_or_plan_file_path]
+    def show(self, state_or_plan_file_path: Optional[str]) -> Optional[TerraformShow]:
+        command = ["show", "-json"]
+        if state_or_plan_file_path is not None:
+            command.append(state_or_plan_file_path)
         rc, stdout, stderr = self._run(*command, check_rc=False)
         if rc == 1:
             raise TerraformWarning(
